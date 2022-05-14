@@ -1,0 +1,7 @@
+venv/
+#exclude model files as they are large
+sentiment_model_dir/pytorch_model.bin
+zs_model_dir/pytorch_model.bin
+zs_mlm_dir/pytorch_model.bin
+#sent_clf_onnx_dir/
+#zs_onnx_dir/
