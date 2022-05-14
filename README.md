@@ -12,7 +12,7 @@ Running the APP
 2. Change the directory to NLP-Use-Cases
    1. cd NLP-Use-Cases
 3. Activate the virtual Environment
-   1. On Mac -  source/venv/bin/activate
+   1. On Mac -  source &nbsp; /venv/bin/activate
    2. On Windows - venv\Scripts\activate
 4. Install the requirements
    1. pip install -r requirements.txt
