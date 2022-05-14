@@ -1,0 +1,21 @@
+SENTIMENT_CLF:
+  sent_chkpt: 'distilbert-base-uncased-finetuned-sst-2-english'
+  sent_mdl_dir: 'sentiment_model_dir'
+  sent_onnx_mdl_dir: 'sent_clf_onnx_dir'
+  sent_onnx_mdl_name: 'sentiment_classifier_onnx.onnx'
+  sent_onnx_quant_mdl_name: 'sentiment_classifier_onnx_quant.onnx'
+
+ZEROSHOT_CLF:
+  zs_chkpt: 'valhalla/distilbart-mnli-12-1'
+  zs_mdl_dir: 'zs_model_dir'
+  zs_onnx_mdl_dir: 'zs_onnx_dir'
+  zs_onnx_mdl_name: 'model.onnx'
+  zs_onnx_quant_mdl_name: 'model_quant.onnx'
+
+ZEROSHOT_MLM:
+  zs_mlm_chkpt: 'bert-base-uncased'
+  zs_mlm_mdl_dir: 'zs_mlm_dir'
+  zs_mlm_onnx_mdl_dir: 'zs_mlm_onnx_dir'
+  zs_mlm_onnx_mdl_name: 'model.onnx'
+
+
