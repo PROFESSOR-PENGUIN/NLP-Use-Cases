@@ -1,0 +1,34 @@
+[theme]
+#theme primary
+base="light"
+# Primary accent color for interactive elements.
+#primaryColor =
+
+# Background color for the main content area.
+#backgroundColor =
+
+# Background color used for the sidebar and most interactive widgets.
+#secondaryBackgroundColor ='grey'
+
+# Color used for almost all text.
+#textColor ='blue'
+
+# Font family for all text in the app, except code blocks. One of "sans serif", "serif", or "monospace".
+# Default: "sans serif"
+font = "sans serif"
+
+# [logger]
+# level='info'
+# messageFormat = "%(message)s"
+#messageFormat="%(asctime)s %(message)s"
+
+[global]
+
+# By default, Streamlit checks if the Python watchdog module is available and, if not, prints a warning asking for you to install it. The watchdog module is not required, but highly recommended. It improves Streamlit's ability to detect changes to files in your filesystem.
+# If you'd like to turn off this warning, set this to True.
+# Default: false
+disableWatchdogWarning = false
+
+# If True, will show a warning when you run a Streamlit-enabled script via "python my_script.py".
+# Default: true
+showWarningOnDirectExecution = false
