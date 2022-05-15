@@ -156,12 +156,11 @@ def sentiment_task_selected(task,
                             sent_onnx_mdl_name=sent_onnx_mdl_name,
                             sent_onnx_quant_mdl_name=sent_onnx_quant_mdl_name):
     ##model & tokenizer initialization for normal sentiment classification
-    # model_sentiment=AutoModelForSequenceClassification.from_pretrained(sent_chkpt)
-    # tokenizer_sentiment=AutoTokenizer.from_pretrained(sent_chkpt)
+    model_sentiment=AutoModelForSequenceClassification.from_pretrained(sent_mdl_dir)
     tokenizer_sentiment = AutoTokenizer.from_pretrained(sent_mdl_dir)
 
     # # create onnx model for sentiment classification but once created in your local app comment this out
-    # create_onnx_model_sentiment(_model=model_sentiment, _tokenizer=tokenizer_sentiment)
+    create_onnx_model_sentiment(_model=model_sentiment, _tokenizer=tokenizer_sentiment)
 
     #create inference session
     sentiment_session = ort.InferenceSession(f"{sent_onnx_mdl_dir}/{sent_onnx_mdl_name}",sess_options=session_options_ort)
@@ -191,7 +190,7 @@ def zs_nli_task_selected(task,
     tokenizer_zs = AutoTokenizer.from_pretrained(zs_mdl_dir)
 
     ## create onnx model for zeroshot but once created locally comment it out.
-    #create_onnx_model_zs_nli()
+    create_onnx_model_zs_nli(zs_chkpt=zs_chkpt,zs_onnx_mdl_dir=zs_onnx_mdl_dir)
 
     #create inference session from onnx model
     zs_session = ort.InferenceSession(f"{zs_onnx_mdl_dir}/{zs_onnx_mdl_name}",sess_options=session_options_ort)
@@ -203,7 +202,7 @@ def zs_nli_task_selected(task,
 
 ############### Pre-Download & instantiate objects for Zero shot clf NLI *********************** START **********************
 ## create model/token dir for zeroshot clf -- already created so not required
-# create_model_dir(chkpt=zs_mlm_chkpt, model_dir=zs_mlm_mdl_dir, task_type='mlm')
+create_model_dir(chkpt=zs_mlm_chkpt, model_dir=zs_mlm_mdl_dir, task_type='mlm')
 
 @st.cache(allow_output_mutation=True, suppress_st_warning=True, max_entries=None, ttl=None)
 def zs_mlm_task_selected(task,
@@ -218,9 +217,7 @@ def zs_mlm_task_selected(task,
     tokenizer_zs_mlm = AutoTokenizer.from_pretrained(zs_mlm_mdl_dir)
 
     # # create onnx model for zeroshot but once created locally comment it out.
-    # create_onnx_model_zs_mlm(_model=model_zs_mlm,
-    #                          _tokenizer=tokenizer_zs_mlm,
-    #                          zs_mlm_onnx_mdl_dir=zs_mlm_onnx_mdl_dir)
+    create_onnx_model_zs_mlm(zs_mlm_chkpt=zs_mlm_chkpt,zs_mlm_onnx_mdl_dir=zs_mlm_onnx_mdl_dir)
 
     # create inference session from onnx model
     zs_session_mlm = ort.InferenceSession(f"{zs_mlm_onnx_mdl_dir}/{zs_mlm_onnx_mdl_name}", sess_options=session_options_ort)
