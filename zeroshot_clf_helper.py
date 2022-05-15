@@ -71,7 +71,7 @@ def zero_shot_classification(premise: str, labels: str, model, tokenizer):
 
     return df
 
-def create_onnx_model_zs_nli(zs_onnx_mdl_dir=zs_onnx_mdl_dir):
+def create_onnx_model_zs_nli(zs_chkpt,zs_onnx_mdl_dir):
     """
 
     Args:
@@ -85,7 +85,7 @@ def create_onnx_model_zs_nli(zs_onnx_mdl_dir=zs_onnx_mdl_dir):
     if not os.path.exists(zs_onnx_mdl_dir):
         try:
             subprocess.run(['python3', '-m', 'transformers.onnx',
-                            '--model=valhalla/distilbart-mnli-12-1',
+                            f'--model={zs_chkpt}',
                             '--feature=sequence-classification',
                             '--atol=1e-3',
                             zs_onnx_mdl_dir])
@@ -147,7 +147,7 @@ def zero_shot_classification_nli_onnx(premise,labels,_session,_tokenizer,hypothe
 
     return df
 
-def create_onnx_model_zs_mlm(_model, _tokenizer,zs_mlm_onnx_mdl_dir=zs_mlm_onnx_mdl_dir):
+def create_onnx_model_zs_mlm(zs_mlm_chkpt,zs_mlm_onnx_mdl_dir):
     """
 
     Args:
@@ -194,14 +194,38 @@ def zero_shot_classification_fillmask_onnx(premise,hypothesis,labels,_session,_t
 
     final_input= f"{premise}.{hypothesis} [MASK]" #this can change depending on chkpt, this is for bert-base-uncased chkpt
 
-    _inputs=_tokenizer(final_input,padding=True, truncation=True,
-                      return_tensors="pt")
+    _inputs=_tokenizer(final_input,padding=True, truncation=True,return_tensors="pt")
+
+
+    ## lowers the performance
+    # premise_token_ids=_tokenizer.encode(premise,add_special_tokens=False)
+    # hypothesis_token_ids=_tokenizer.encode(hypothesis,add_special_tokens=False)
+    #
+    # #creating inputs ids
+    # input_ids=[_tokenizer.cls_token_id]+premise_token_ids+[_tokenizer.sep_token_id]+hypothesis_token_ids+[_tokenizer.sep_token_id]
+    # input_ids=np.array(input_ids)
+    #
+    # #creating token type ids
+    # premise_len=len(premise_token_ids)
+    # hypothesis_len=len(hypothesis_token_ids)
+    # token_type_ids=np.array([0]*(premise_len+2)+[1]*(hypothesis_len+1))
+    #
+    # #creating attention mask
+    # attention_mask=np.array([1]*(premise_len+hypothesis_len+3))
+    #
+    # input_feed={
+    #     'input_ids': np.expand_dims(input_ids,axis=0),
+    #     'token_type_ids': np.expand_dims(token_type_ids,0),
+    #     'attention_mask': np.expand_dims(attention_mask,0)
+    # }
+
 
     input_feed={
         'input_ids': np.array(_inputs['input_ids']),
         'token_type_ids': np.array(_inputs['token_type_ids']),
         'attention_mask': np.array(_inputs['attention_mask'])
     }
+
 
     output=_session.run(output_names=['logits'],input_feed=dict(input_feed))[0]
 
