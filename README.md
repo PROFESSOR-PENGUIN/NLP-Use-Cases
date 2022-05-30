@@ -1,10 +1,5 @@
 ---
-title: Sentiment & Zeroshot Classification
-emoji: 🌍
-colorFrom: blue
-colorTo: yellow
-sdk: streamlit
-sdk_version: 1.9.0
+title: Sentiment & Zeroshot Classification using Streamlit
 app_file: app.py
 ---
 
