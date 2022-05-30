@@ -1,7 +1,5 @@
----
-title: Sentiment & Zeroshot Classification using Streamlit
-app_file: app.py
----
+Sentiment & Zeroshot Classification using Streamlit
+=======================
 
 Summary of Tasks 
 =======================
